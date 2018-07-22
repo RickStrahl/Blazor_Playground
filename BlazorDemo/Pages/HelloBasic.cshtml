@@ -1,0 +1,50 @@
+﻿@page "/hellobasic"
+
+<h1>Hello @Name, from Blazor</h1>
+
+@if (!string.IsNullOrEmpty(Name))
+{
+    <div class="alert alert-info">
+        @SayHello(Name), time is<br />
+        <i class="oi oi-clock"></i>
+        <small><i>@DateTime.Now.ToString("MMM dd, yyyy - HH:mm:ss")</i></small>
+    </div>
+}
+
+<TimeDisplayComponent Message="Timing is everything!" FormatString="HH:mm:ss" />
+
+<hr/>
+
+<button class="btn btn-primary"
+        onclick="@IncrementCount">
+    Increment Count:
+    <b class="green-text">@currentCount</b>
+</button>
+
+@functions {
+    string Name = "Rick";
+    int currentCount = 0;
+
+
+
+    //protected override Task OnInitAsync()
+    //{
+
+    //    var timer = new System.Timers.Timer();
+    //    timer.Elapsed += (s, ev) =>
+    //    {
+    //        this.StateHasChanged();
+    //    };
+    //    timer.Interval = 1000;
+    //    timer.Start();
+
+    //    return base.OnInitAsync();
+    //}
+
+    void IncrementCount() => currentCount++;
+
+    string SayHello(string name)
+    {
+        return $"Welcome back, {name}";
+    }
+}   

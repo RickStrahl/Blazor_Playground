@@ -1,0 +1,23 @@
+﻿@page "/counter"
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<div class="alert alert-success">
+    @Message
+</div>
+
+<button class="btn btn-primary" onclick="@IncrementCount">Click me</button>
+
+@functions {
+    int currentCount = 0;
+    string Message = "empty";
+
+    void IncrementCount(UIMouseEventArgs ev)
+    {
+        currentCount++;
+        Message = ev.Type + ev.ClientX + "x" + ev.ClientY;
+        
+    }
+}

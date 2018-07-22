@@ -1,0 +1,127 @@
+﻿@page "/todos"
+@inject HttpClient Http
+
+<link href="/css/todos.css" rel="stylesheet" />
+
+<div class="container">
+
+    <div class="card bg-light" style="max-width: 900px">
+        <div class="card-body">
+            <form name="form1" id="form1">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-prepend">
+                            <i class="fa fa-bookmark input-group-text"></i>
+                        </span>
+                        <input type="text" class="form-control"
+                               id="name" name="name"
+                               bind="@activeTodo.Title"
+                               placeholder="Enter the title for this ToDo"
+                               required />
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <!--<label class="control-label" for="form-group-input">Description:</label>-->
+                    <textarea class="form-control"
+                              id="description" name="description"
+                              style="height: 100px"
+                              bind="activeTodo.Description"
+                              minlength="10"
+                              placeholder="Enter the description for this placeholder"
+                              required></textarea>
+                </div>
+
+                <button class="btn btn-primary" type="button"
+                        onclick="@(()=> addTodo(activeTodo) )">
+                    <i class="fa fa-plus"></i> Add Todo
+                </button>
+                <button class="btn btn-primary" type="button"
+                        onclick="@loadTodos">
+                    <i class="fa fa-download"></i>
+                    Load ToDos
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <pre>@Json</pre>
+
+    <div class="todo-container">
+        @foreach (var todo in todoItems.OrderByDescending(td => td.Entered))
+        {
+        <div class="todo-item @(todo.Completed ? "completed" : "")">
+
+            <div class="pull-right">
+                <i class="fa fa-remove"
+                   onclick="@(()=> removeTodo(todo))"
+                   style="color: darkred; cursor: pointer"></i>
+            </div>
+            
+            <div class="todo-entered">
+                <i class="fa fa-clock-o"></i> @(todo.Entered.ToString("MMM dd @ H:mm"))
+                @*@TimeUtils.FriendlyDateString(todo.Entered, true)*@
+            </div>
+            
+            <div class="pull-left" onclick="@(()=> toggleCompleted(todo) )">
+                <i class="fa @(todo.Completed ? "fa-check green-text larger" : "fa-bookmark-o")"
+                   style="cursor: pointer; font-size: 2em; margin-top:7px;">
+                </i>
+            </div>
+
+            <div class="todo-content">
+                <div class="todo-header">
+                    @todo.Title
+                </div>
+                <div>
+                    @todo.Description
+                </div>
+            </div>
+        </div>
+        }
+
+    </div>
+</div>
+
+
+@functions {
+    TodoItem activeTodo = new TodoItem() { Title = "New ToDo", Description = "Get 'er done!" };
+    List<TodoItem> todoItems = new List<TodoItem>();
+    string Json = null;
+
+    protected override async Task OnInitAsync()
+    {
+        Console.WriteLine(DateTime.Now.ToLocalTime().ToString("HH:mm"));
+        await loadTodos();
+    }
+
+    async Task loadTodos()
+    {
+        Console.WriteLine("Loading Todos");
+
+        todoItems = TodoBusiness.Todos;
+
+        //var busTodos = new TodoBusiness(Http);
+        //todoItems = await busTodos.LoadTodos();
+
+        //Json = JsonUtil.Serialize(todoItems);
+        //Json = Newtonsoft.Json.JsonConvert.SerializeObject(todoItems, Newtonsoft.Json.Formatting.Indented);
+    }
+
+    void toggleCompleted(TodoItem todo)
+    {
+        todo.Completed = !todo.Completed;
+    }
+
+    void removeTodo(TodoItem todo)
+    {
+        todoItems.Remove(todo);
+    }
+
+    void addTodo(TodoItem todo)
+    {
+        todoItems.Insert(0, todo);
+    }
+}

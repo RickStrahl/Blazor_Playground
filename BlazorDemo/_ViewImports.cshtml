@@ -1,0 +1,25 @@
+﻿@using System.Net.Http
+@using Microsoft.AspNetCore.Blazor.Layouts
+@using Microsoft.AspNetCore.Blazor.Routing
+@using BlazorDemo
+@using BlazorDemo.Shared
+@using Westwind.Utilities
+
+@functions{ 
+
+    protected override async Task OnInitAsync()
+    {
+
+        Console.WriteLine("Starting up ViewImports");
+
+        //// Force TimeZone - mono bug
+        //var field = typeof(TimeZoneInfo).GetField("local", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+        //field.SetValue(null, TimeZoneInfo.CreateCustomTimeZone("FAKE", TimeSpan.FromHours(8), "FAKE", "FAKE"));
+
+
+        //Console.WriteLine($"Timezone offset: {TimeZoneInfo.Local.GetUtcOffset(DateTime.Now)}");
+
+        //await base.OnInitAsync();
+    }
+
+}

@@ -1,0 +1,33 @@
+﻿<div class="alert alert-secondary mt-4" role="alert">
+    <div>@Message</div>
+
+    <i class="oi oi-clock"></i>&nbsp;
+    <b style="font-size: 2.5em;">
+        @Time.ToString(FormatString)
+    </b>
+</div>
+
+@functions {
+    [Parameter]
+    string FormatString { get; set; } = "HH:mm:ss"; // Demonstrates how a parent component can supply parameters
+
+    [Parameter]
+    string Message { get; set; }
+
+    DateTime Time { get; set; } = DateTime.Now;
+
+    protected override Task OnInitAsync()
+    {
+        var timer = new System.Timers.Timer();
+        timer.Elapsed += (s, ev) =>
+        {
+            Console.WriteLine("Updateing timer");
+            Time = DateTime.Now;
+            this.StateHasChanged();
+        };
+        timer.Interval = 1000;
+        timer.Start();
+
+        return base.OnInitAsync();
+    }
+}

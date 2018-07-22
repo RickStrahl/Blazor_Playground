@@ -1,0 +1,60 @@
+﻿@page "/hello"
+
+<h1>Hello from Blazor</h1>
+
+<p>
+    <i class="oi oi-clock"></i> @DateString(DateTime.Now, "MMMM dd - h:mm ")
+</p>
+
+<hr>
+
+<div class="form-group">
+    <label for="name">What's your name:</label>
+    <input type="text" class="form-control"
+           bind="@Model.Name"
+           name="name" id="name" placeholder="Enter your name..." />
+</div>
+
+
+@if (!string.IsNullOrEmpty(Model.Name)) {
+<div class="alert alert-info">
+    <i class="fa fa-info-circle"></i>
+    Welcome back, <b>@Model.Name</b>. It's good to see you again...
+</div>
+}
+
+<hr/>
+
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+<div class="alert alert-info">
+    @Model.Message
+</div>
+}
+
+<button class="btn btn-primary" onclick="@IncrementCount">Increment Count: <b class="green-text">@Model.CurrentCount</b></button>
+
+@functions {    
+    HelloModel Model = new HelloModel();
+
+    void IncrementCount(UIMouseEventArgs ev)
+    {
+        Model.CurrentCount++;
+    }
+
+
+    string DateString(DateTime date, string format)
+    {
+        return date.AddHours(-7).ToString(format);
+    }
+
+
+    public class HelloModel
+    {
+        public string Message { get; set; }
+        public string Name { get; set; }
+        public int CurrentCount { get; set; }
+    }
+
+}
