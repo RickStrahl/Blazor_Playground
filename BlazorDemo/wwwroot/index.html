@@ -10,19 +10,69 @@
     <link href="css/site.css" rel="stylesheet" />
 </head>
 <body>
-    <app>        
+    <app>
         <div style="display:flex; padding: 20px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px;">
             <div style="justify-content: center; align-content: center">
                 <i class="fa fa-spin fa-circle-o-notch"></i>
                 Loading...
-            </div>            
+            </div>
         </div>
     </app>
 
-    <script type="blazor-boot"></script>
+    <script type="blazor-boot">
+    </script>
 
+
+    <!-- all script and script tags have to be loaded here for now! -->
     <script>
-        
+        // Register a very simple JavaScript function that just prints
+        // the input parameter to the browser's console
+        Blazor.registerFunction('alerty', (data) => {
+            alert(data);
+
+            // Your function currently has to return something. For demo
+            // purposes, we just return `true`.
+            return true;
+        });
+
+        Blazor.registerFunction('focus', (query) => {
+            var el = document.querySelector(query);
+            if (el && el.focus)
+                el.focus();
+
+            return true; // MUST return a result
+        });
+    </script>
+    <script>
+        // Call .NET
+        setTimeout(function () {
+            var res = callStaticDotnetMethod("InteropFunctions", "FormatDate", [new Date(), "MMM dd, yyyy"]);
+            alert(res);
+        },5000);
+
+        function callStaticDotnetMethod(type, method, parametersArray) {
+            debugger;
+            let assembly = "BlazorDemo";
+            let namespace = "BlazorDemo";
+
+            for (var i = 0; i < parametersArray.length; i++) {
+                debugger;
+                if (typeof parametersArray[i] === "String")
+                    parametersArray[i] === Blazor.platform.toDotNetString(parametersArray);
+                else if (typeof parametersArray[i] === "Date")
+                    parametersArray[i] === Blazor.platform.toDotNetDate(parametersArray);
+            }
+
+            var method = Blazor.platform.findMethod(type, method, parametersArray);
+            if (!method)
+                return null;
+
+            debugger;
+            let result = blazor.platform.callMethod(method, null, parametersArray);
+
+            debugger;
+            return result;
+        }
     </script>
 </body>
 </html>

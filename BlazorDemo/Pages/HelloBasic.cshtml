@@ -27,19 +27,16 @@
 
 
 
-    //protected override Task OnInitAsync()
-    //{
+    protected override Task OnInitAsync()
+    {
 
-    //    var timer = new System.Timers.Timer();
-    //    timer.Elapsed += (s, ev) =>
-    //    {
-    //        this.StateHasChanged();
-    //    };
-    //    timer.Interval = 1000;
-    //    timer.Start();
+        var timer = new System.Timers.Timer();
+        timer.Elapsed += (s, ev) => this.StateHasChanged();
+        timer.Interval = 1000;
+        timer.Start();
 
-    //    return base.OnInitAsync();
-    //}
+        return base.OnInitAsync();
+    }
 
     void IncrementCount() => currentCount++;
 

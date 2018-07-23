@@ -22,6 +22,9 @@
     <Content Update="Pages\HelloBasic.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\Interop.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\HelloBlazor.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

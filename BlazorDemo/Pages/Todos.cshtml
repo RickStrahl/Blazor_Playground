@@ -1,5 +1,8 @@
-﻿@page "/todos"
+﻿@using BlazorDemo
+
+@page "/todos"
 @inject HttpClient Http
+@inject TodoBusiness TodoBusiness
 
 <link href="/css/todos.css" rel="stylesheet" />
 
@@ -21,8 +24,6 @@
                     </div>
                 </div>
 
-
-
                 <div class="form-group">
                     <!--<label class="control-label" for="form-group-input">Description:</label>-->
                     <textarea class="form-control"
@@ -35,13 +36,13 @@
                 </div>
 
                 <button class="btn btn-primary" type="button"
-                        onclick="@(()=> addTodo(activeTodo) )">
+                        onclick="@(() => addTodo(activeTodo) )">
                     <i class="fa fa-plus"></i> Add Todo
                 </button>
                 <button class="btn btn-primary" type="button"
-                        onclick="@loadTodos">
+                        onclick="@reload">
                     <i class="fa fa-download"></i>
-                    Load ToDos
+                    Reload ToDos
                 </button>
             </form>
         </div>
@@ -56,7 +57,7 @@
 
             <div class="pull-right">
                 <i class="fa fa-remove"
-                   onclick="@(()=> removeTodo(todo))"
+                   onclick="@(() => removeTodo(todo))"
                    style="color: darkred; cursor: pointer"></i>
             </div>
             
@@ -65,7 +66,7 @@
                 @*@TimeUtils.FriendlyDateString(todo.Entered, true)*@
             </div>
             
-            <div class="pull-left" onclick="@(()=> toggleCompleted(todo) )">
+            <div class="pull-left" onclick="@(() => toggleCompleted(todo) )">
                 <i class="fa @(todo.Completed ? "fa-check green-text larger" : "fa-bookmark-o")"
                    style="cursor: pointer; font-size: 2em; margin-top:7px;">
                 </i>
@@ -99,16 +100,19 @@
 
     async Task loadTodos()
     {
-        Console.WriteLine("Loading Todos");
+        //Console.WriteLine("Loading Todos");
+        //todoItems = TodoBusiness.Todos;
 
-        todoItems = TodoBusiness.Todos;
-
-        //var busTodos = new TodoBusiness(Http);
-        //todoItems = await busTodos.LoadTodos();
+        var busTodos = TodoBusiness; // new TodoBusiness(Http);
+        todoItems = await busTodos.LoadTodos();
 
         //Json = JsonUtil.Serialize(todoItems);
         //Json = Newtonsoft.Json.JsonConvert.SerializeObject(todoItems, Newtonsoft.Json.Formatting.Indented);
     }
+
+    // Event handler has to match Event Signature!
+    async Task reload() => await loadTodos();
+
 
     void toggleCompleted(TodoItem todo)
     {

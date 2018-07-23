@@ -7,16 +7,15 @@ namespace BlazorDemo
 {
     public class Program
     {
-        static void Main(string[] args)
-        {
-            var serviceProvider = new BrowserServiceProvider(services =>
-            {
-                // Add any custom services here
+static void Main(string[] args)
+{
+    var serviceProvider = new BrowserServiceProvider(services =>
+    {
+        // Add any custom services here
+        services.AddTransient<TodoBusiness>();                
+    });
 
-                
-            });
-
-            new BrowserRenderer(serviceProvider).AddComponent<App>("app");
-        }
+    new BrowserRenderer(serviceProvider).AddComponent<App>("app");
+}
     }
 }
