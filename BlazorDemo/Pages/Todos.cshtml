@@ -66,7 +66,8 @@
                 @*@TimeUtils.FriendlyDateString(todo.Entered, true)*@
             </div>
             
-            <div class="pull-left" onclick="@(() => toggleCompleted(todo) )">
+            <div class="pull-left" 
+                 onclick="@(() => todo.Completed = !todo.Completed)">
                 <i class="fa @(todo.Completed ? "fa-check green-text larger" : "fa-bookmark-o")"
                    style="cursor: pointer; font-size: 2em; margin-top:7px;">
                 </i>
@@ -127,5 +128,6 @@
     void addTodo(TodoItem todo)
     {
         todoItems.Insert(0, todo);
+        activeTodo = new TodoItem();
     }
 }
