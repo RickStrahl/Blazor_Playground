@@ -13,14 +13,14 @@ namespace BlazorDemo
 
 public class TodoBusiness
 {
-    public static List<TodoItem> Todos { get; set; } 
-        //= new List<TodoItem> {
-        //new TodoItem { Title = "Go windsurfing", Description = "Hope it's windy" },
-        //new TodoItem { Title = "Back to work", Description = "Write a new blog post. Get with it!" },
-        //new TodoItem { Title = "Maintenance Mode: Markdown Monster", Description = "Work on bug list for MM" },
-        //new TodoItem { Title = "Fix Air Conditioner", Description = "Buy supplies and measure" },
-        //new TodoItem { Title = "Write Web Assembly Article", Description="Create small demo, write up internals." }
-    //};
+    public static List<TodoItem> Todos { get; set; }
+        = new List<TodoItem> {
+        new TodoItem { Title = "Go windsurfing", Description = "Hope it's windy" },
+        new TodoItem { Title = "Back to work", Description = "Write a new blog post. Get with it!" },
+        new TodoItem { Title = "Maintenance Mode: Markdown Monster", Description = "Work on bug list for MM" },
+        new TodoItem { Title = "Fix Air Conditioner", Description = "Buy supplies and measure" },
+        new TodoItem { Title = "Write Web Assembly Article", Description="Create small demo, write up internals." }
+    };
 
 
         private HttpClient _httpClient;
@@ -32,7 +32,7 @@ public class TodoBusiness
 
         public async Task<List<TodoItem>> LoadTodos()
         {            
-            Todos = await _httpClient.GetJsonAsync<List<TodoItem>>("/sample-data/todos.json");            
+            //Todos = await _httpClient.GetJsonAsync<List<TodoItem>>("/sample-data/todos.json");            
             return Todos;         
         }
     }

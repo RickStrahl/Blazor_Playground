@@ -16,18 +16,36 @@
 
     DateTime Time { get; set; } = DateTime.Now;
 
+    // Make sure timer only is created once!
+    public System.Timers.Timer _timer;
+
     protected override Task OnInitAsync()
     {
-        var timer = new System.Timers.Timer();
-        timer.Elapsed += (s, ev) =>
+        Console.WriteLine("Timer Component Created");
+
+        _timer = new System.Timers.Timer();
+        _timer.Elapsed += (page, ev) =>
         {
-            Console.WriteLine("Updateing timer");
+            if (page == null)
+            {
+                _timer.Stop();
+                _timer.Dispose();
+                _timer = null;
+                Console.WriteLine("Timer disposed");                    
+                return;
+            }
+
             Time = DateTime.Now;
             this.StateHasChanged();
+            Console.WriteLine("Timer fired: " + Time);
         };
-        timer.Interval = 1000;
-        timer.Start();
+        _timer.Interval = 1000;
+        _timer.Start();
+
+        Console.WriteLine("Timer created");
+        
 
         return base.OnInitAsync();
-    }
+    }    
+
 }
