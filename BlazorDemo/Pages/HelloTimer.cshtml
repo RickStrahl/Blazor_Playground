@@ -1,4 +1,4 @@
-﻿@page "/hellobasic"
+﻿@page "/hellotimer"
 
 <h1>Hello @Name, from Blazor</h1>
 
@@ -11,7 +11,8 @@
     </div>
 }
 
-<TimeDisplayComponent Message="Timing is everything!" FormatString="HH:mm:ss" />
+<TimeDisplay Message="Timing is everything!" 
+             FormatString="HH:mm:ss" />
 
 <hr/>
 
@@ -29,12 +30,6 @@
 
     protected override Task OnInitAsync()
     {
-
-        var timer = new System.Timers.Timer();
-        timer.Elapsed += (s, ev) => this.StateHasChanged();
-        timer.Interval = 1000;
-        timer.Start();
-
         return base.OnInitAsync();
     }
 

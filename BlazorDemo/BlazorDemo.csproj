@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Pages\HelloBasic.cshtml">
+    <Content Update="Pages\HelloTimer.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\Interop.cshtml">
@@ -34,7 +34,7 @@
     <Content Update="Shared\ErrorDisplay.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Shared\TimeDisplayComponent.cshtml">
+    <Content Update="Shared\TimeDisplay.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
