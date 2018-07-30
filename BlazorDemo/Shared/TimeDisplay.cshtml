@@ -1,4 +1,6 @@
-﻿<div class="alert alert-secondary mt-4" role="alert">
+﻿@implements IDisposable
+
+<div class="alert alert-secondary mt-4" role="alert">
     <div>@Message</div>
 
     <i class="oi oi-clock"></i>&nbsp;
@@ -21,17 +23,12 @@
 
     protected override Task OnInitAsync()
     {
-        Console.WriteLine("Timer Component Created");
-
         _timer = new System.Timers.Timer();
         _timer.Elapsed += (page, ev) =>
         {
             if (page == null)
             {
-                _timer.Stop();
-                _timer.Dispose();
-                _timer = null;
-                Console.WriteLine("Timer disposed");                    
+                Dispose();
                 return;
             }
 
@@ -41,11 +38,23 @@
         };
         _timer.Interval = 1000;
         _timer.Start();
-
         Console.WriteLine("Timer created");
-        
+
 
         return base.OnInitAsync();
-    }    
+    }
+
+    /// <summary>
+    /// Important: Must dispose the timer or else the timer
+    /// keeps firing in the background while the component
+    /// gets released as you navigate off.
+    /// </summary>
+    public void Dispose()
+    {
+        Console.WriteLine("Timer Disposing");
+        _timer?.Stop();
+        _timer.Dispose();
+        _timer = null;
+    }
 
 }
