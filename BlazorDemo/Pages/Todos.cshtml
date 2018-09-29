@@ -62,8 +62,8 @@
             </div>
             
             <div class="todo-entered">
-                <i class="fa fa-clock-o"></i> @(todo.Entered.ToString("MMM dd @ H:mm"))
-                @*@TimeUtils.FriendlyDateString(todo.Entered, true)*@
+                <i class="fa fa-clock-o"></i> @*@(todo.Entered.ToString("MMM dd @ H:mm"))*@                 
+                @Westwind.Utilities.TimeUtils.FriendlyDateString(todo.Entered, true)
             </div>
             
             <div class="pull-left" 
